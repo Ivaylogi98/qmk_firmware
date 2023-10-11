@@ -298,9 +298,9 @@ bool encoder_update_kb(uint8_t index, bool clockwise) {
     } else if (index == 1) {
         // Page up/Page down
         if (clockwise) {
-            tap_code(KC_WH_U);
-        } else {
             tap_code(KC_WH_D);
+        } else {
+            tap_code(KC_WH_U);
         }
     }
     return true;
