@@ -22,7 +22,7 @@ enum layers {
   _LOWER,
   _RAISE,
   _ADJUST,
-  
+  _GAMING,
 };
 
 #ifdef OLED_ENABLE
@@ -299,9 +299,9 @@ bool encoder_update_kb(uint8_t index, bool clockwise) {
     } else if (index == 1) {
         // Page up/Page down
         if (clockwise) {
-            tap_code(KC_WH_D);
+            tap_code(KC_PGDN);
         } else {
-            tap_code(KC_WH_U);
+            tap_code(KC_PGUP);
         }
     }
     return true;
