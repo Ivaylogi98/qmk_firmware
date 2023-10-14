@@ -25,6 +25,36 @@ enum layers {
   _GAMING,
 };
 
+
+// Add custom gaming layer
+enum my_keycodes {
+  GAMING_ON = SAFE_RANGE,
+  GAMING_OFF = SAFE_RANGE
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case GAMING_ON:
+            #ifdef AUDIO_ENABLE
+                PLAY_NOTE_ARRAY(tone_plover, false, 0);
+            #endif        
+            layer_off(_RAISE);
+            layer_off(_LOWER);
+            layer_off(_ADJUST);
+            layer_on(_GAMING);
+            return false; // Skip all further processing of this key
+    case GAMING_OFF:
+        if (record->event.pressed) {
+            #ifdef AUDIO_ENABLE
+                PLAY_NOTE_ARRAY(tone_plover_gb, false, 0);
+            #endif
+            layer_off(_GAMING);
+        }
+        return false;  // Skip all further processing of this key
+  }
+}
+
+
 #ifdef OLED_ENABLE
 // NOTE: Most of the OLED code was originally written by Soundmonster for the Corne,
 // and has been copied directly from `crkbd/soundmonster/keymap.c`
@@ -316,3 +346,4 @@ void keyboard_pre_init_user(void) {
   // (Due to technical reasons, high is off and low is on)
   writePinHigh(24);
 }
+
